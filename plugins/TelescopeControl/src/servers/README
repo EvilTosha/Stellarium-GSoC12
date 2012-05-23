@@ -1,0 +1,21 @@
+All the code in this directory has been branched from the original
+telescope server code. It cannot be compiled into stand-alone executables.
+
+All the code was originally licensed under the GNU Lesser General Public
+License, version 2.1 or later, and has been re-licensed under the GNU General
+Public License, version 2.0 or later, in accordance to term #3 of version 2.1 of
+the GNU LGPL.
+See GNU_LGPL.txt for the full text of the license.
+
+Most of the code in this directory has been written by Johannes Gajdosik
+as a part of Stellarium's original telescope control feature, including
+the Lx200 classes.
+
+The NexStar classes were created by Michael Heinz using the Lx200 control code
+as a base.
+
+Some bug fixes have been contributed by Timothy Reaves and Bogdan Marinov.
+
+Most of the Doxygen-readable code documentation has been written by
+Bogdan Marinov.
+

@@ -1,0 +1,64 @@
+Telescope Control Plug-in for Stellarium
+========================================
+(Version 0.1.9; Bogdan Marinov <bogdan.marinov84@gmail.com>)
+
+1. INTRODUCTION
+===============
+
+This plug-in allows Stellarium to be used as a software interface for
+controlling a telescope on a computerized mount (a "GoTo telescope"). Up to nine
+connections to separate telescopes can be maintained simultaneously.
+
+Unlike the previous version of the same feature that still is integrated in
+Stellarium, this plug-in offers a more user-friendly graphical interface
+for setting up and configuring a telescope connection.
+
+You can directly control a telescope connected to your computer, or set up
+a connection over a network/the Internet to a telescope connected to another
+computer running the appropriate software. As of version 0.1.9, the plug-in
+supports only the simple Stellarium telescope "drivers" and
+any third party software compatible with Stellarium's telescope protocol
+(e.g. StellariumScope). Support for INDI and/or ASCOM is planned for future
+versions.
+
+2. REQUIREMENTS
+===============
+
+As of version 0.1.9, this plug-in IS NOT compatible with Stellarium
+versions 0.10.2 and earlier.
+
+As of version 0.1.9, this plug-in uses embedded telescope servers, which means
+that it no longer needs external telescope server executables. Nevertheless,
+they can be used to override the embedded code.
+
+You can set the path to the servers directory. The default path is:
+
+<user data directory>/servers/
+
+If you want the latest versions, you can check out the source code and build the
+binaries yourself:
+
+https://stellarium.svn.sourceforge.net/svnroot/stellarium/trunk/telescope_server
+
+
+3. USING THE PLUG-IN
+====================
+
+Some minimal instructions:
+
+The main Telescope Control window is opened by pressing the "Configure" button
+for the Telescope Control plug-in in the "Plugins" tab of the "Configuration"
+window. It allows you to Add, Configure, Start and Stop (Connect and Disconnect)
+a telescope connection.
+
+Pressing Configure for a running connection will cause it to stop. After
+finishing with the configuration, you will have to restart the connection by
+pressing Start/Connect.
+
+Pointing a telescope to a given object, a star for example, is done by selecting
+that object and pressing [Ctrl+the number of that telescope] (Ctrl+1 to Ctrl+9).
+
+You can edit the "Serial port" drop-down list to add serial ports that are not
+included in the list. For now, this list is empty in the Mac OS X version, so
+the names of serial devices always have to be entered manually.
+

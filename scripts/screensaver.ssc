@@ -1,0 +1,64 @@
+//
+// Name: Screensaver
+// License: Public Domain
+// Author: Matthew Gates
+// Description: A slow, infinite tour of the sky, looking at random objects.
+//
+
+include("common_objects.inc");
+
+// prevent jerky display, at the cost of power/CPU consumption
+core.setMinFps(2000);
+core.clear("starchart");
+GridLinesMgr.setFlagEquatorGrid(false);
+core.setGuiVisible(false);
+id = LabelMgr.labelScreen("Press Ctrl+T to un-hide the toolbar", 100,100, false, 20);
+LabelMgr.setLabelShow(id, true);
+core.wait(4);
+LabelMgr.setLabelShow(id, false);
+LabelMgr.deleteLabel(id);
+ConstellationMgr.setFlagIsolateSelected(true);
+
+while(1)
+{
+	var r = Math.floor(Math.random()*3);
+	var objName;
+	var objType;
+	if (r == 0)
+	{
+		objType = "Planet";
+		objName = planets[Math.floor(Math.random()*planets.length)];
+	}
+	else if (r == 1)
+	{
+		objType = "Constellation";
+		objName = constellations[Math.floor(Math.random()*constellations.length)];
+	}
+	else
+	{
+		objType = "Nebula";
+		objName = nebulae[Math.floor(Math.random()*nebulae.length)];
+	}
+	core.debug("Choosing " + objType + " (" + r + "): " + objName);
+	core.selectObjectByName(objName, true);
+	if (r == 1)
+	{
+		StelMovementMgr.autoZoomIn(6);
+		core.wait(1);
+		StelMovementMgr.zoomTo(40,8);
+		core.wait(1);
+		ConstellationMgr.setFlagArt(true);
+		core.wait(4);
+		core.wait(10);
+		ConstellationMgr.setFlagArt(false);
+	}
+	else
+	{
+		StelMovementMgr.autoZoomIn(6);
+		core.wait(10);
+		StelMovementMgr.zoomTo(60,8);
+		core.wait(10);
+	}
+}
+
+
