@@ -93,7 +93,7 @@ public slots:
 	const QString getDescription(const QString& s);
 
 	//! Run the prprocessed script
-	//! @param preprocessedScript the location of the file containing the script.
+	//! @param preprocessedScript the string containing the preprocessed script.
 	//! @return false if the given script could not be run, true otherwise
 	bool runPreprocessedScript(const QString& preprocessedScript);
 
