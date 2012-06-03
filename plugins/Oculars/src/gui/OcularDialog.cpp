@@ -235,7 +235,7 @@ void OcularDialog::keyBindingTogglePluginChanged(const QString& newString)
 	Oculars::appSettings()->setValue("bindings/toggle_oculars", newString);
 	StelGui* gui = dynamic_cast<StelGui*>(StelApp::getInstance().getGui());
 	Q_ASSERT(gui);
-	QAction* action = gui->getGuiActions("actionShow_Ocular");
+	QAction* action = gui->getGuiAction("actionShow_Ocular");
 	if (action != NULL) {
 		action->setShortcut(QKeySequence(newString.trimmed()));
 	}
@@ -246,7 +246,7 @@ void OcularDialog::keyBindingPopupNavigatorConfigChanged(const QString& newStrin
 	Oculars::appSettings()->setValue("bindings/popup_navigator", newString);
 	StelGui* gui = dynamic_cast<StelGui*>(StelApp::getInstance().getGui());
 	Q_ASSERT(gui);
-	QAction* action = gui->getGuiActions("actionShow_Ocular_Menu");
+	QAction* action = gui->getGuiAction("actionShow_Ocular_Menu");
 	if (action != NULL) {
 		action->setShortcut(QKeySequence(newString.trimmed()));
 	}
@@ -435,9 +435,9 @@ void OcularDialog::initAboutText()
 
 	StelGui* gui = dynamic_cast<StelGui*>(StelApp::getInstance().getGui());
 	Q_ASSERT(gui);
-	QAction* actionOcular = gui->getGuiActions("actionShow_Ocular");
+	QAction* actionOcular = gui->getGuiAction("actionShow_Ocular");
 	Q_ASSERT(actionOcular);
-	QAction* actionMenu = gui->getGuiActions("actionShow_Ocular_Menu");
+	QAction* actionMenu = gui->getGuiAction("actionShow_Ocular_Menu");
 	Q_ASSERT(actionMenu);
 	QKeySequence ocularShortcut = actionOcular->shortcut();
 	QString ocularString = ocularShortcut.toString(QKeySequence::NativeText);

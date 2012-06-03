@@ -1197,7 +1197,7 @@ void Oculars::initializeActivationActions()
 	//the first time this action is checked. See:
 	//http://doc.qt.nokia.com/4.7/signalsandslots.html#signals
 	QString shortcutStr = settings->value("bindings/toggle_oculars", "Ctrl+O").toString();
-	actionShowOcular = gui->addGuiActions("actionShow_Ocular",
+	actionShowOcular = gui->addGuiAction("actionShow_Ocular",
 	                                      N_("Ocular view"),
 	                                      shortcutStr,
 	                                      group,
@@ -1221,7 +1221,7 @@ void Oculars::initializeActivationActions()
 	        this, SLOT(enableOcular(bool)));
 
 	shortcutStr = settings->value("bindings/popup_navigator", "Alt+O").toString();
-	actionMenu = gui->addGuiActions("actionShow_Ocular_Menu",
+	actionMenu = gui->addGuiAction("actionShow_Ocular_Menu",
 	                                N_("Oculars popup menu"),
 	                                shortcutStr,
 	                                group,
@@ -1229,7 +1229,7 @@ void Oculars::initializeActivationActions()
 	connect(actionMenu, SIGNAL(toggled(bool)),
 	        this, SLOT(displayPopupMenu()));
 
-	actionShowCrosshairs = gui->addGuiActions("actionShow_Ocular_Crosshairs",
+	actionShowCrosshairs = gui->addGuiAction("actionShow_Ocular_Crosshairs",
 	                                          N_("Crosshairs"),
 	                                          QString(),
 	                                          group,
@@ -1237,7 +1237,7 @@ void Oculars::initializeActivationActions()
 	connect(actionShowCrosshairs, SIGNAL(toggled(bool)),
 	        this, SLOT(toggleCrosshairs(bool)));
 
-	actionShowSensor = gui->addGuiActions("actionShow_Sensor",
+	actionShowSensor = gui->addGuiAction("actionShow_Sensor",
 	                                      N_("Image sensor frame"),
 	                                      QString(),
 	                                      group,
@@ -1245,7 +1245,7 @@ void Oculars::initializeActivationActions()
 	connect(actionShowSensor, SIGNAL(toggled(bool)),
 			this, SLOT(toggleCCD(bool)));
 
-	actionShowTelrad = gui->addGuiActions("actionShow_Telrad",
+	actionShowTelrad = gui->addGuiAction("actionShow_Telrad",
 	                                      N_("Telrad sight"),
 	                                      QString(),
 	                                      group,
@@ -1253,7 +1253,7 @@ void Oculars::initializeActivationActions()
 	connect(actionShowTelrad, SIGNAL(toggled(bool)),
 	        this, SLOT(toggleTelrad(bool)));
 
-	actionConfiguration = gui->addGuiActions("actionOpen_Oculars_Configuration",
+	actionConfiguration = gui->addGuiAction("actionOpen_Oculars_Configuration",
 	                                         N_("Oculars plugin configuration"),
 	                                         QString(),
 	                                         group,

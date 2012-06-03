@@ -154,15 +154,15 @@ void TelescopeControl::init()
 			QString name = QString("actionMove_Telescope_To_Selection_%1").arg(i);
 			QString description = q_("Move telescope #%1 to selected object").arg(i);
 			QString shortcut = QString("Ctrl+%1").arg(i);
-			gui->addGuiActions(name, description, shortcut, group, false, false);
-			connect(gui->getGuiActions(name), SIGNAL(triggered()), this, SLOT(slewTelescopeToSelectedObject()));
+			gui->addGuiAction(name, description, shortcut, group, false, false);
+			connect(gui->getGuiAction(name), SIGNAL(triggered()), this, SLOT(slewTelescopeToSelectedObject()));
 
 			// "Slew to the center of the screen" commands
 			name = QString("actionSlew_Telescope_To_Direction_%1").arg(i);
 			description = q_("Move telescope #%1 to the point currently in the center of the screen").arg(i);
 			shortcut = QString("Alt+%1").arg(i);
-			gui->addGuiActions(name, description, shortcut, group, false, false);
-			connect(gui->getGuiActions(name), SIGNAL(triggered()), this, SLOT(slewTelescopeToViewDirection()));
+			gui->addGuiAction(name, description, shortcut, group, false, false);
+			connect(gui->getGuiAction(name), SIGNAL(triggered()), this, SLOT(slewTelescopeToViewDirection()));
 		}
 	
 		//Create and initialize dialog windows
@@ -170,15 +170,15 @@ void TelescopeControl::init()
 		slewDialog = new SlewDialog();
 		
 		//TODO: Think of a better keyboard shortcut
-		gui->addGuiActions("actionShow_Slew_Window", N_("Move a telescope to a given set of coordinates"), "Ctrl+0", group, true, false);
-		connect(gui->getGuiActions("actionShow_Slew_Window"), SIGNAL(toggled(bool)), slewDialog, SLOT(setVisible(bool)));
-		connect(slewDialog, SIGNAL(visibleChanged(bool)), gui->getGuiActions("actionShow_Slew_Window"), SLOT(setChecked(bool)));
+		gui->addGuiAction("actionShow_Slew_Window", N_("Move a telescope to a given set of coordinates"), "Ctrl+0", group, true, false);
+		connect(gui->getGuiAction("actionShow_Slew_Window"), SIGNAL(toggled(bool)), slewDialog, SLOT(setVisible(bool)));
+		connect(slewDialog, SIGNAL(visibleChanged(bool)), gui->getGuiAction("actionShow_Slew_Window"), SLOT(setChecked(bool)));
 		
 		//Create toolbar button
 		pixmapHover =	new QPixmap(":/graphicGui/glow32x32.png");
 		pixmapOnIcon =	new QPixmap(":/telescopeControl/button_Slew_Dialog_on.png");
 		pixmapOffIcon =	new QPixmap(":/telescopeControl/button_Slew_Dialog_off.png");
-		toolbarButton =	new StelButton(NULL, *pixmapOnIcon, *pixmapOffIcon, *pixmapHover, gui->getGuiActions("actionShow_Slew_Window"));
+		toolbarButton =	new StelButton(NULL, *pixmapOnIcon, *pixmapOffIcon, *pixmapHover, gui->getGuiAction("actionShow_Slew_Window"));
 		gui->getButtonBar()->addButton(toolbarButton, "065-pluginsGroup");
 	}
 	catch (std::runtime_error &e)

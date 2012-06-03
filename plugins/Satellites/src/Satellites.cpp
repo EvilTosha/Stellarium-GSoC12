@@ -127,23 +127,23 @@ void Satellites::init()
 		// TRANSLATORS: Title of a group of key bindings in the Help window
 		QString groupName = N_("Plugin Key Bindings");
 		StelGui* gui = dynamic_cast<StelGui*>(StelApp::getInstance().getGui());
-		gui->addGuiActions("actionShow_Satellite_ConfigDialog_Global", N_("Satellites configuration window"), "Alt+Z", groupName, true, false, true);
-		gui->addGuiActions("actionShow_Satellite_Hints", N_("Satellite hints"), "Ctrl+Z", groupName, true, false);
-		gui->getGuiActions("actionShow_Satellite_Hints")->setChecked(getFlagHints());
-		gui->addGuiActions("actionShow_Satellite_Labels", N_("Satellite labels"), "Shift+Z", groupName, true, false);
-		gui->getGuiActions("actionShow_Satellite_Labels")->setChecked(Satellite::showLabels);
+		gui->addGuiAction("actionShow_Satellite_ConfigDialog_Global", N_("Satellites configuration window"), "Alt+Z", groupName, true, false, true);
+		gui->addGuiAction("actionShow_Satellite_Hints", N_("Satellite hints"), "Ctrl+Z", groupName, true, false);
+		gui->getGuiAction("actionShow_Satellite_Hints")->setChecked(getFlagHints());
+		gui->addGuiAction("actionShow_Satellite_Labels", N_("Satellite labels"), "Shift+Z", groupName, true, false);
+		gui->getGuiAction("actionShow_Satellite_Labels")->setChecked(Satellite::showLabels);
 
 		// Gui toolbar button
 		pxmapGlow = new QPixmap(":/graphicGui/glow32x32.png");
 		pxmapOnIcon = new QPixmap(":/satellites/bt_satellites_on.png");
 		pxmapOffIcon = new QPixmap(":/satellites/bt_satellites_off.png");
-		toolbarButton = new StelButton(NULL, *pxmapOnIcon, *pxmapOffIcon, *pxmapGlow, gui->getGuiActions("actionShow_Satellite_Hints"));
+		toolbarButton = new StelButton(NULL, *pxmapOnIcon, *pxmapOffIcon, *pxmapGlow, gui->getGuiAction("actionShow_Satellite_Hints"));
 		gui->getButtonBar()->addButton(toolbarButton, "065-pluginsGroup");
 
-		connect(gui->getGuiActions("actionShow_Satellite_ConfigDialog_Global"), SIGNAL(toggled(bool)), configDialog, SLOT(setVisible(bool)));
-		connect(configDialog, SIGNAL(visibleChanged(bool)), gui->getGuiActions("actionShow_Satellite_ConfigDialog_Global"), SLOT(setChecked(bool)));
-		connect(gui->getGuiActions("actionShow_Satellite_Hints"), SIGNAL(toggled(bool)), this, SLOT(setFlagHints(bool)));
-		connect(gui->getGuiActions("actionShow_Satellite_Labels"), SIGNAL(toggled(bool)), this, SLOT(setFlagLabels(bool)));
+		connect(gui->getGuiAction("actionShow_Satellite_ConfigDialog_Global"), SIGNAL(toggled(bool)), configDialog, SLOT(setVisible(bool)));
+		connect(configDialog, SIGNAL(visibleChanged(bool)), gui->getGuiAction("actionShow_Satellite_ConfigDialog_Global"), SLOT(setChecked(bool)));
+		connect(gui->getGuiAction("actionShow_Satellite_Hints"), SIGNAL(toggled(bool)), this, SLOT(setFlagHints(bool)));
+		connect(gui->getGuiAction("actionShow_Satellite_Labels"), SIGNAL(toggled(bool)), this, SLOT(setFlagLabels(bool)));
 
 	}
 	catch (std::runtime_error &e)
@@ -374,7 +374,7 @@ bool Satellites::configureGui(bool show)
 	if (show)
 	{
 		StelGui* gui = dynamic_cast<StelGui*>(StelApp::getInstance().getGui());
-		gui->getGuiActions("actionShow_Satellite_ConfigDialog_Global")->setChecked(true);
+		gui->getGuiAction("actionShow_Satellite_ConfigDialog_Global")->setChecked(true);
 	}
 
 	return true;
