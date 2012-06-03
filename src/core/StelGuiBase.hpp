@@ -57,12 +57,12 @@ public:
 	//! @param checkable whether the action should be checkable
 	//! @param autoRepeat whether the action should be autorepeated
 	//! @param global whether the action should be global (affect in dialogs)
-    virtual QAction* addGuiAction(const QString& actionName, const QString& text, const QString& shortcuts, const QString& helpGroup, bool checkable=true, bool autoRepeat=false, bool global=false);
+	virtual QAction* addGuiAction(const QString& actionName, const QString& text, const QString& shortcuts, const QString& helpGroup, bool checkable=true, bool autoRepeat=false, bool global=false);
 
 	//! Get a pointer on an action managed by the GUI
 	//! @param actionName qt object name for this action
 	//! @return a pointer on the QAction object or NULL if don't exist
-    virtual QAction* getGuiAction(const QString& actionName);
+	virtual QAction* getGuiAction(const QString& actionName);
 
 	virtual void forceRefreshGui() {;}
 

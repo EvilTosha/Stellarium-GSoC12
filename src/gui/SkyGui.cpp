@@ -86,7 +86,7 @@ SkyGui::SkyGui(QGraphicsItem * parent): QGraphicsWidget(parent), stelGui(NULL)
 	winBar = new LeftStelBar(this);
 	// Construct the bottom buttons bar
 	buttonBar = new BottomStelBar(this, QPixmap(":/graphicGui/btbg-left.png"), QPixmap(":/graphicGui/btbg-right.png"),
-								  QPixmap(":/graphicGui/btbg-middle.png"), QPixmap(":/graphicGui/btbg-single.png"));
+																QPixmap(":/graphicGui/btbg-middle.png"), QPixmap(":/graphicGui/btbg-single.png"));
 	infoPanel = new InfoPanel(this);
 
 	// Used to display some progress bar in the lower right corner, e.g. when loading a file
@@ -161,7 +161,7 @@ void SkyGui::init(StelGui* astelGui)
 void SkyGui::resizeEvent(QGraphicsSceneResizeEvent* event)
 {
 	QGraphicsWidget::resizeEvent(event);
-		updateBarsPos();
+	updateBarsPos();
 }
 
 void SkyGui::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
@@ -222,13 +222,13 @@ void SkyGui::updateBarsPos()
 	if (buttonBar->pos().x()!=newButtonBarX || buttonBar->pos().y()!=newButtonBarY)
 	{
 		buttonBar->setPos(round(newButtonBarX), round(newButtonBarY));
-				updatePath = true;
+		updatePath = true;
 	}
 
 	if (lastButtonbarWidth != buttonBar->boundingRectNoHelpLabel().width())
 	{
-				updatePath = true;
-				lastButtonbarWidth = (int)(buttonBar->boundingRectNoHelpLabel().width());
+		updatePath = true;
+		lastButtonbarWidth = (int)(buttonBar->boundingRectNoHelpLabel().width());
 	}
 
 	if (updatePath)
