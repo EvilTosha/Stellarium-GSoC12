@@ -18,7 +18,6 @@
  */
 
 #include "StelShortcutMgr.hpp"
-#include "StelIniParser.hpp" // TODO: remove when start use json
 #include "StelJsonParser.hpp"
 #include "StelApp.hpp"
 #include "StelFileMgr.hpp"

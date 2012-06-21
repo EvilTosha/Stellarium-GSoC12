@@ -197,14 +197,14 @@ QByteArray StelJsonParserInstance::readString()
 	{
 		switch (c)
 		{
-			case '\"':
+			case '"':
 				return name;
 			case '\\':
 			{
 				getChar(&c);
-				// 	case '\"': break;
-				// 	case '\\': break;
-				// 	case '/': break;
+				if (c == '"') { name += c; break; }
+				if (c == '\\') { name += c; break; }
+				if (c == '/') { name += c; break; }
 				if (c=='b') c='\b';
 				if (c=='f') c='\f';
 				if (c=='n') c='\n';
