@@ -62,7 +62,7 @@ public:
 	//! @return a pointer to the progress bar
 	class QProgressBar* addProgressBar();
 	
-    void init(class StelGui* stelGui);
+	void init(class StelGui* stelGui);
 	
 	virtual void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget* = 0);
 	
