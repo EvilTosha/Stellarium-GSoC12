@@ -140,7 +140,7 @@ bool StelShortcutMgr::loadShortcuts(const QString &filePath)
 				QString scriptFilePath = StelFileMgr::findFile(actionMap["scriptFile"].toString());
 				if (!QFileInfo(scriptFilePath).exists())
 				{
-					qWarning() << "Couldn't find file " << actionMap["scriptFIle"] <<
+					qWarning() << "Couldn't find file " << actionMap["scriptFile"] <<
 												"for shortcut " << actionId;
 				}
 				else
