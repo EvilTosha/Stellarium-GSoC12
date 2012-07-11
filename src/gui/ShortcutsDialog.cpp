@@ -60,7 +60,7 @@ void ShortcutLineEdit::backspace()
 
 void ShortcutLineEdit::setContents(QKeySequence ks)
 {
-	// need for avoiding infinite loop of same signal-slot calling
+	// need for avoiding infinite loop of same signal-slot emitting/calling
 	if (ks.toString() == text())
 		return;
 	// clear before setting up
@@ -257,19 +257,19 @@ void ShortcutsDialog::handleChanges()
 	// updating clear buttons
 	if (ui->primaryShortcutEdit->isEmpty())
 	{
-		ui->clearPrimaryButton->setEnabled(false);
+		ui->primaryBackspaceButton->setEnabled(false);
 	}
 	else
 	{
-		ui->clearPrimaryButton->setEnabled(true);
+		ui->primaryBackspaceButton->setEnabled(true);
 	}
 	if (ui->altShortcutEdit->isEmpty())
 	{
-		ui->clearAltButton->setEnabled(false);
+		ui->altBackspaceButton->setEnabled(false);
 	}
 	else
 	{
-		ui->clearAltButton->setEnabled(true);
+		ui->altBackspaceButton->setEnabled(true);
 	}
 	QString primText = ui->primaryShortcutEdit->text();
 	QString altText = ui->altShortcutEdit->text();
@@ -365,7 +365,7 @@ void ShortcutsDialog::updateText()
 {
 }
 
-bool ShortcutsDialog::itemIsEditable(QTreeWidgetItem *item) const
+bool ShortcutsDialog::itemIsEditable(QTreeWidgetItem *item)
 {
 	if (item == NULL) return false;
 	// non-editable items have no Qt::ItemIsSelectable flag

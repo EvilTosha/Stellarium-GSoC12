@@ -97,7 +97,7 @@ protected:
 
 private:
 	// checks whether given item can be changed by editors
-	bool itemIsEditable(QTreeWidgetItem *item) const;
+	static bool itemIsEditable(QTreeWidgetItem *item);
 	//! This function concatenates the header, key codes and footer to build
 	//! up the help text.
 	void updateText(void);
