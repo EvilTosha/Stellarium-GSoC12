@@ -336,6 +336,8 @@ void ShortcutsDialog::createDialogContent()
 	QList<StelShortcutGroup*> groups = shortcutMgr->getGroupList();
 	foreach (StelShortcutGroup* group, groups)
 	{
+		// don't show disabled groups
+		if (!group->isEnabled()) continue;
 		QTreeWidgetItem* groupItem = new QTreeWidgetItem(ui->shortcutsTreeWidget);
 		// group items aren't selectable
 		groupItem->setFlags(Qt::ItemIsEnabled);
