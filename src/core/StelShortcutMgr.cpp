@@ -20,6 +20,7 @@
 #include "StelShortcutMgr.hpp"
 #include "StelJsonParser.hpp"
 #include "StelApp.hpp"
+#include "StelAppGraphicsWidget.hpp"
 #include "StelModuleMgr.hpp"
 #include "StelFileMgr.hpp"
 #include "StelMainGraphicsView.hpp"
@@ -152,10 +153,6 @@ bool StelShortcutMgr::loadShortcuts(const QString &filePath)
 	QFile jsonFile(filePath);
 	jsonFile.open(QIODevice::ReadOnly);
 	QMap<QString, QVariant> groups = StelJsonParser::parse(jsonFile.readAll()).toMap()["groups"].toMap();
-	foreach (StelModuleMgr::PluginDescriptor desc, StelApp::getInstance().getModuleMgr().getPluginsList())
-	{
-		qDebug() << desc.info.id;
-	}
 
 	// parsing shortcuts groups from file
 	for (QMap<QString, QVariant>::iterator group = groups.begin(); group != groups.end(); ++group)
