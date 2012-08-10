@@ -306,6 +306,9 @@ void ShortcutsDialog::applyChanges() const
 	// changing displaying information in tree
 	ui->shortcutsTreeWidget->currentItem()->setText(1, ui->primaryShortcutEdit->text());
 	ui->shortcutsTreeWidget->currentItem()->setText(2, ui->altShortcutEdit->text());
+
+	// save shortcuts to file
+	shortcutMgr->saveShortcuts();
 }
 
 void ShortcutsDialog::switchToEditors(QModelIndex index)
