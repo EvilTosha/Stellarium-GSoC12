@@ -45,8 +45,9 @@ public:
 	void saveShortcuts(QIODevice* output);
 
 	// Add a new action managed by the GUI. This method should be used to add new shortcuts to the program
-	QAction* addGuiAction(const QString& actionId, const QString& text, const QString& primaryKey, const QString& altKey,
-												const QString& groupId, bool checkable=true, bool autoRepeat=false, bool global=false);
+	QAction* addGuiAction(const QString& actionId, bool temporary, const QString& text, const QString& primaryKey,
+												const QString& altKey, const QString &groupId,
+												bool checkable = true, bool autoRepeat = false, bool global = false);
 
 	void changeActionPrimaryKey(const QString& actionId, const QString& groupId, QKeySequence newKey);
 	void changeActionAltKey(const QString& actionId, const QString& groupId, QKeySequence newKey);
@@ -71,6 +72,9 @@ public slots:
 	// enable/disable all actions of application
 	// need for editing shortcuts without trigging any actions
 	void setAllActionsEnabled(bool enable);
+
+	// restore all shortcuts from default file
+	void restoreDefaultShortcuts();
 
 private:
 	// copy default shortcuts file (in usr dir) to shortcuts file.

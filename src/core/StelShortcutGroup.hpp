@@ -81,7 +81,7 @@ class StelShortcutGroup : public QObject
 	Q_OBJECT
 public:
 	StelShortcutGroup(QString id, QString text = "");
-	QAction* registerAction(const QString& actionId, const QString& text, const QString& primaryKey,
+	QAction* registerAction(const QString& actionId, bool temporary, const QString& text, const QString& primaryKey,
 													const QString& altKey, bool checkable, bool autoRepeat = true,
 													bool global = false, QGraphicsWidget *parent = false);
 

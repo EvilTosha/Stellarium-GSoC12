@@ -162,13 +162,14 @@ StelShortcutGroup::StelShortcutGroup(QString id, QString text) :
 {
 }
 
-QAction* StelShortcutGroup::registerAction(const QString &actionId, const QString &text, const QString &primaryKey,
+QAction* StelShortcutGroup::registerAction(const QString &actionId, bool temporary, const QString &text, const QString &primaryKey,
 																					 const QString &altKey, bool checkable, bool autoRepeat, bool global, QGraphicsWidget *parent)
 {
 	if (m_shortcuts.contains(actionId))
 	{
 		qWarning() << "Attempt to add an existing shortcut with id: " << actionId << ", rewrite properties";
 		StelShortcut *shortcut = getShortcut(actionId);
+		shortcut->setTemporary(temporary);
 		shortcut->setText(text);
 		shortcut->setPrimaryKey(primaryKey);
 		shortcut->setAltKey(altKey);

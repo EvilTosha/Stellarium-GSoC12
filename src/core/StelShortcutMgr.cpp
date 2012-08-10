@@ -31,7 +31,6 @@
 #include <QAction>
 #include <QDebug>
 #include <QFileInfo>
-#include <QTextStream>
 
 StelShortcutMgr::StelShortcutMgr()
 {
@@ -45,7 +44,7 @@ void StelShortcutMgr::init()
 // Note: "text" and "helpGroup" must be in English -- this method and the help
 // dialog take care of translating them. Of course, they still have to be
 // marked for translation using the N_() macro.
-QAction* StelShortcutMgr::addGuiAction(const QString& actionId, const QString& text, const QString& primaryKey,
+QAction* StelShortcutMgr::addGuiAction(const QString& actionId, bool temporary, const QString& text, const QString& primaryKey,
 																			 const QString& altKey, const QString &groupId, bool checkable, bool autoRepeat, bool global)
 {
 	if (!shGroups.contains(groupId))
@@ -54,8 +53,8 @@ QAction* StelShortcutMgr::addGuiAction(const QString& actionId, const QString& t
 							 << "for action " << actionId << "; group text is empty";
 		shGroups[groupId] = new StelShortcutGroup(groupId);
 	}
-	return shGroups[groupId]->registerAction(actionId, text, primaryKey, altKey, checkable,
-																				 autoRepeat, global, stelAppGraphicsWidget);
+	return shGroups[groupId]->registerAction(actionId, temporary, text, primaryKey, altKey, checkable,
+																					 autoRepeat, global, stelAppGraphicsWidget);
 }
 
 void StelShortcutMgr::changeActionPrimaryKey(const QString &actionId, const QString &groupId, QKeySequence newKey)
@@ -294,7 +293,7 @@ bool StelShortcutMgr::loadShortcuts(const QString &filePath)
 				global = true;
 			}
 			// create & init shortcut
-			addGuiAction(actionId, text, primaryKey, altKey, groupId, checkable, autorepeat, global);
+			addGuiAction(actionId, false, text, primaryKey, altKey, groupId, checkable, autorepeat, global);
 			// set script if it exist
 			if (actionMap.contains("script"))
 			{
@@ -341,6 +340,10 @@ void StelShortcutMgr::loadShortcuts()
 	}
 }
 
+void StelShortcutMgr::restoreDefaultShortcuts()
+{
+}
+
 void StelShortcutMgr::saveShortcuts()
 {
 	qDebug() << "Saving shortcuts ...";
@@ -353,9 +356,9 @@ void StelShortcutMgr::saveShortcuts()
 	catch (std::runtime_error& e)
 	{
 		qWarning() << "Creating non-existent shortcuts.json file... ";
-		if (!StelFileMgr::exists(StelFileMgr::getUserDir()+"/data"))
+		if (!StelFileMgr::exists(StelFileMgr::getUserDir() + "/data"))
 		{
-			if (!StelFileMgr::mkDir(StelFileMgr::getUserDir()+"/data"))
+			if (!StelFileMgr::mkDir(StelFileMgr::getUserDir() + "/data"))
 			{
 				qWarning() << "ERROR - cannot create non-existent data directory" <<
 											StelFileMgr::getUserDir() + "/data";

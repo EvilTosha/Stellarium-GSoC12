@@ -309,6 +309,9 @@ void ShortcutsDialog::applyChanges() const
 
 	// save shortcuts to file
 	shortcutMgr->saveShortcuts();
+
+	// nothing to apply until edits' content changes
+	ui->applyButton->setEnabled(false);
 }
 
 void ShortcutsDialog::switchToEditors(QModelIndex index)
@@ -328,7 +331,9 @@ void ShortcutsDialog::createDialogContent()
 	connect(ui->shortcutsTreeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(initEditors()));
 	connect(ui->shortcutsTreeWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(switchToEditors(QModelIndex)));
 	// apply button logic
-	connect(ui->applyButton, SIGNAL(released()), this, SLOT(applyChanges()));
+	connect(ui->applyButton, SIGNAL(clicked()), this, SLOT(applyChanges()));
+	// restore defaults button logic
+	connect(ui->restoreDefaultsButton, SIGNAL(clicked()), shortcutMgr, SLOT(restoreDefaultShortcuts()));
 	// we need to disable all shortcut actions, so we can enter shortcuts without activating any actions
 	connect(ui->primaryShortcutEdit, SIGNAL(focusChanged(bool)), shortcutMgr, SLOT(setAllActionsEnabled(bool)));
 	connect(ui->altShortcutEdit, SIGNAL(focusChanged(bool)), shortcutMgr, SLOT(setAllActionsEnabled(bool)));
