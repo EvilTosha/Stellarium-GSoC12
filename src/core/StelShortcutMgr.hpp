@@ -24,6 +24,7 @@
 #include <QAction>
 
 QT_FORWARD_DECLARE_CLASS(StelShortcutGroup)
+QT_FORWARD_DECLARE_CLASS(StelShortcut)
 QT_FORWARD_DECLARE_CLASS(StelAppGraphicsWidget)
 
 class StelShortcutMgr : public QObject
@@ -42,7 +43,7 @@ public:
 	// save current shortcuts to file
 	void saveShortcuts();
 
-	void saveShortcuts(QIODevice* output);
+	void saveShortcuts(QIODevice* output) const;
 
 	// Add a new action managed by the GUI. This method should be used to add new shortcuts to the program
 	QAction* addGuiAction(const QString& actionId, bool temporary, const QString& text, const QString& primaryKey,
@@ -67,6 +68,7 @@ public:
 	QList<StelShortcutGroup*> getGroupList() const;
 
 signals:
+	void shortcutChanged(StelShortcut* shortcut);
 	
 public slots:
 	// enable/disable all actions of application
