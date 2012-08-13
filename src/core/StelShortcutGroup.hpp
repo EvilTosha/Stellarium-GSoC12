@@ -24,11 +24,13 @@
 #include <QMap>
 #include <QAction>
 
+QT_FORWARD_DECLARE_CLASS(StelShortcutGroup)
+
 class StelShortcut : public QObject
 {
 	Q_OBJECT
 public:
-	StelShortcut(const QString& id, class StelShortcutGroup* group, const QString& text,
+	StelShortcut(const QString& id, StelShortcutGroup* group, const QString& text,
 							 const QString& primaryKey, const QString& altKey,
 							 bool checkable, bool autoRepeat = true, bool global = false, QGraphicsWidget *parent = NULL);
 

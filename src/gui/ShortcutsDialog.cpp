@@ -331,7 +331,7 @@ void ShortcutsDialog::createDialogContent()
 	// apply button logic
 	connect(ui->applyButton, SIGNAL(clicked()), this, SLOT(applyChanges()));
 	// restore defaults button logic
-	connect(ui->restoreDefaultsButton, SIGNAL(clicked()), shortcutMgr, SLOT(restoreDefaultShortcuts()));
+	connect(ui->restoreDefaultsButton, SIGNAL(clicked()), this, SLOT(restoreDefaultShortcuts()));
 	// we need to disable all shortcut actions, so we can enter shortcuts without activating any actions
 	connect(ui->primaryShortcutEdit, SIGNAL(focusChanged(bool)), shortcutMgr, SLOT(setAllActionsEnabled(bool)));
 	connect(ui->altShortcutEdit, SIGNAL(focusChanged(bool)), shortcutMgr, SLOT(setAllActionsEnabled(bool)));
@@ -426,6 +426,12 @@ void ShortcutsDialog::updateShortcutsItem(StelShortcut *shortcut, QTreeWidgetIte
 	shortcutTreeItem->setText(0, shortcut->getText());
 	shortcutTreeItem->setData(1, Qt::DisplayRole, shortcut->getPrimaryKey());
 	shortcutTreeItem->setData(2, Qt::DisplayRole, shortcut->getAltKey());
+}
+
+void ShortcutsDialog::restoreDefaultShortcuts()
+{
+	shortcutMgr->restoreDefaultShortcuts();
+	initEditors();
 }
 
 bool ShortcutsDialog::itemIsEditable(QTreeWidgetItem *item)

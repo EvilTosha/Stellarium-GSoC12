@@ -183,18 +183,15 @@ void StelShortcutMgr::addGroup(const QString &id, QString text, const QString &p
 			enabled = pluginDescriptor.loadAtStartup;
 		}
 	}
-	// creating group
-	if (shGroups.contains(id))
-	{
-		// no need to create new group
-		return;
-	}
-	else
+
+	// create group
+	if (!shGroups.contains(id))
 	{
 		StelShortcutGroup* newGroup = new StelShortcutGroup(id, text);
 		shGroups[id] = newGroup;
 		connect(newGroup, SIGNAL(shortcutChanged(StelShortcut*)), this, SIGNAL(shortcutChanged(StelShortcut*)));
 	}
+
 	// applying group properties
 	shGroups[id]->setEnabled(enabled);
 }
@@ -346,7 +343,13 @@ void StelShortcutMgr::loadShortcuts()
 
 void StelShortcutMgr::restoreDefaultShortcuts()
 {
-	loadShortcuts(StelFileMgr::getInstallationDir() + "/data/default_shortcuts.json");
+	QString defaultPath = StelFileMgr::getInstallationDir() + "/data/default_shortcuts.json";
+	if (!QFileInfo(defaultPath).exists())
+	{
+		qWarning() << "Default shortcuts file(" << defaultPath << ") doesn't exist, restore defaults failed";
+		return;
+	}
+	loadShortcuts(defaultPath);
 	// save shortcuts to actual file
 	saveShortcuts();
 }
