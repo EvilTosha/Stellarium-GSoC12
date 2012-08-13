@@ -276,8 +276,9 @@ void ShortcutsDialog::handleChanges()
 	// updating apply button
 	QString primText = ui->primaryShortcutEdit->text();
 	QString altText = ui->altShortcutEdit->text();
-	if (primText == ui->shortcutsTreeWidget->currentItem()->text(1) &&
-			altText == ui->shortcutsTreeWidget->currentItem()->text(2))
+	if (ui->shortcutsTreeWidget->currentItem() == NULL ||
+			(primText == ui->shortcutsTreeWidget->currentItem()->text(1) &&
+			 altText == ui->shortcutsTreeWidget->currentItem()->text(2)))
 	{
 		// nothing to apply
 		ui->applyButton->setEnabled(false);
@@ -345,9 +346,6 @@ void ShortcutsDialog::createDialogContent()
 	QList<StelShortcutGroup*> groups = shortcutMgr->getGroupList();
 	foreach (StelShortcutGroup* group, groups)
 	{
-		// don't show disabled groups
-		if (!group->isEnabled()) continue;
-
 		QTreeWidgetItem* groupItem = addGroup(group);
 		// display group's shortcuts
 		QList<StelShortcut*> shortcuts = group->getActionList();
@@ -376,8 +374,8 @@ QTreeWidgetItem *ShortcutsDialog::addGroup(StelShortcutGroup *group)
 	groupItem->setText(0, text);
 	// store id
 	groupItem->setData(0, Qt::UserRole, group->getId());
-	// expand by default
-	groupItem->setExpanded(true);
+	// expand only enabled group
+	groupItem->setExpanded(group->isEnabled());
 	// setup bold font for group lines
 	QFont rootFont = groupItem->font(0);
 	rootFont.setBold(true); rootFont.setPixelSize(14);
