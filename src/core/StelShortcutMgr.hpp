@@ -65,8 +65,7 @@ public:
 	QAction* addScriptToAction(const QString& actionId, const QString& script, const QString& scriptAction = QString());
 
 	// get list of all group of shortcuts
-	QList<StelShortcutGroup*> getGroupList() const;
-
+    QList<StelShortcutGroup*> getGroupList() const;
 signals:
 	void shortcutChanged(StelShortcut* shortcut);
 	
@@ -77,6 +76,12 @@ public slots:
 
 	// restore all shortcuts from default file
 	void restoreDefaultShortcuts();
+
+    // look through default shortcuts file for shortcuts missed in current file
+    // can be used for getting shortcuts for newly added plugins
+    // probably in future default shortcut can be downloaded for
+    // keeping actual data
+    void mergeWithDefaults();
 
 private:
 	// copy default shortcuts file (in usr dir) to shortcuts file.
