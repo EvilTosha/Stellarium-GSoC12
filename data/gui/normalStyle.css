@@ -194,7 +194,6 @@ QPushButton#pushButtonGotoSearchSkyObject {
 	image: url(:/graphicGui/searchButtonImage.png);
 }
 
-
 QFrame#completionLabel {
 	font-size: 14px;
 	padding-left: 20px;
