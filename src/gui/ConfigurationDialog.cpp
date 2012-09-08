@@ -217,6 +217,7 @@ void ConfigurationDialog::createDialogContent()
 	connect(ui->enableKeysNavigationCheckBox, SIGNAL(toggled(bool)), mvmgr, SLOT(setFlagEnableZoomKeys(bool)));
 	connect(ui->enableMouseNavigationCheckBox, SIGNAL(toggled(bool)), mvmgr, SLOT(setFlagEnableMouseNavigation(bool)));
 	connect(ui->fixedDateTimeCurrentButton, SIGNAL(clicked()), this, SLOT(setFixedDateTimeToCurrent()));
+	connect(ui->editShortcutsPushButton, SIGNAL(clicked()), gui->getGuiAction("actionShow_Shortcuts_Window_Global"), SLOT(trigger()));
 
 	// Tools tab
 	ConstellationMgr* cmgr = GETSTELMODULE(ConstellationMgr);
@@ -231,6 +232,8 @@ void ConfigurationDialog::createDialogContent()
 	connect(ui->diskViewportCheckbox, SIGNAL(toggled(bool)), this, SLOT(setDiskViewport(bool)));
 	ui->autoZoomResetsDirectionCheckbox->setChecked(mvmgr->getFlagAutoZoomOutResetsDirection());
 	connect(ui->autoZoomResetsDirectionCheckbox, SIGNAL(toggled(bool)), mvmgr, SLOT(setFlagAutoZoomOutResetsDirection(bool)));
+	ui->renderSolarShadowsCheckbox->setChecked(StelApp::getInstance().getRenderSolarShadows());
+	connect(ui->renderSolarShadowsCheckbox, SIGNAL(toggled(bool)), &StelApp::getInstance(), SLOT(setRenderSolarShadows(bool)));
 
 	ui->showFlipButtonsCheckbox->setChecked(gui->getFlagShowFlipButtons());
 	connect(ui->showFlipButtonsCheckbox, SIGNAL(toggled(bool)), gui, SLOT(setFlagShowFlipButtons(bool)));
@@ -378,7 +381,9 @@ void ConfigurationDialog::setSelectedInfoFromCheckBoxes()
 	if (ui->checkBoxExtra2->isChecked())
 		flags |= StelObject::Extra2;
 	if (ui->checkBoxExtra3->isChecked())
-		flags |= StelObject::Extra3;
+		flags |= StelObject::Extra3;	
+	if (ui->checkBoxGalacticCoordJ2000->isChecked())
+		flags |= StelObject::GalCoordJ2000;
 	
 	gui->setInfoTextFilters(flags);
 }
@@ -393,7 +398,12 @@ void ConfigurationDialog::cursorTimeOutChanged()
 void ConfigurationDialog::browseForScreenshotDir()
 {
 	QString oldScreenshorDir = StelFileMgr::getScreenshotDir();
-	QString newScreenshotDir = QFileDialog::getExistingDirectory(NULL, q_("Select screenshot directory"), oldScreenshorDir, QFileDialog::ShowDirsOnly);
+	#ifdef Q_OS_MAC
+		//work-around for Qt bug -  http://bugreports.qt.nokia.com/browse/QTBUG-16722
+		QString newScreenshotDir = QFileDialog::getExistingDirectory(NULL, q_("Select screenshot directory"), oldScreenshorDir, QFileDialog::DontUseNativeDialog);
+	#else
+		QString newScreenshotDir = QFileDialog::getExistingDirectory(NULL, q_("Select screenshot directory"), oldScreenshorDir, QFileDialog::ShowDirsOnly);
+	#endif
 
 	if (!newScreenshotDir.isEmpty()) {
 		// remove trailing slash
@@ -548,6 +558,8 @@ void ConfigurationDialog::saveCurrentViewOptions()
 		               (bool) (flags & StelObject::Extra2));
 		conf->setValue("flag_show_extra3",
 		               (bool) (flags & StelObject::Extra3));
+		conf->setValue("flag_show_galcoordj2000",
+			       (bool) (flags & StelObject::GalCoordJ2000));
 		conf->endGroup();
 	}
 
@@ -578,6 +590,7 @@ void ConfigurationDialog::saveCurrentViewOptions()
 	conf->setValue("video/viewport_effect", StelMainGraphicsView::getInstance().getStelAppGraphicsWidget()->getViewportEffect());
 	conf->setValue("projection/viewport", StelProjector::maskTypeToString(proj->getMaskType()));
 	conf->setValue("viewing/flag_gravity_labels", proj->getFlagGravityLabels());
+	conf->setValue("viewing/flag_render_solar_shadows", StelApp::getInstance().getRenderSolarShadows());
 	conf->setValue("navigation/auto_zoom_out_resets_direction", mvmgr->getFlagAutoZoomOutResetsDirection());
 	conf->setValue("gui/flag_mouse_cursor_timeout", StelMainGraphicsView::getInstance().getFlagCursorTimeout());
 	conf->setValue("gui/mouse_cursor_timeout", StelMainGraphicsView::getInstance().getCursorTimeout());
@@ -1023,6 +1036,7 @@ void ConfigurationDialog::updateSelectedInfoCheckBoxes()
 	ui->checkBoxExtra1->setChecked(flags & StelObject::Extra1);
 	ui->checkBoxExtra2->setChecked(flags & StelObject::Extra2);
 	ui->checkBoxExtra3->setChecked(flags & StelObject::Extra3);
+	ui->checkBoxGalacticCoordJ2000->setChecked(flags & StelObject::GalCoordJ2000);
 }
 
 void ConfigurationDialog::updateTabBarListWidgetWidth()
